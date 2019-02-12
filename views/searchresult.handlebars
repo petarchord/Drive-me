@@ -1,0 +1,32 @@
+{{#if result}}
+<div>
+    <h2>{{date}} </h2>
+  <table class="table ">
+  <thead>
+    <tr>
+      <th scope="col">Start destination</th>
+      <th scope="col">End destination</th>
+      <th scope="col">Time</th>
+      <th scope="col">Price</th>
+      <th scope="col">Additional info</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each result}}
+      <tr class="table-primary">
+      <td>{{this.start}}</td>  
+      <td>{{this.end}}</td>
+      <td>{{this.time}}</td>
+      <td>{{this.price}}</td>
+      <td><a class="btn btn-secondary" href="/searchresult/{{this._id}}">Show</a></td>
+      </tr>
+      {{/each}}
+  </tbody>
+  </table>
+</div>
+{{else}}
+<div class="alert alert-dismissible alert-danger">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Oh snap!</strong> There are no any drives for entered inputs at this moment.
+</div>
+{{/if}}

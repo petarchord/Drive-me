@@ -1,0 +1,33 @@
+<div style="position:absolute; width:400px; top:10%; left:3%;" class="animated fadeInUp">
+    <h3> Where are you going today? </h3>
+    <form method="POST" action="/searchresult">
+        <div class="form-group">
+            <label> Start destination: </label>
+            <input type="text" name="start" class="form-control">
+            <small id="emailHelp" class="form-text text-muted">Exmpl: Nis, Kraljevo,Beograd...</small>
+        </div>
+        <div class="form-group">
+            <label> End destination: </label>
+            <input type="text" name="end" class="form-control">
+            <small id="emailHelp" class="form-text text-muted">Exmpl: Nis, Kraljevo,Beograd...</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleSelect1">Date:</label>
+        <select class="form-control" name="date">
+            {{#each dates}}
+            <option>{{this}}</option>
+            {{/each}}
+           
+        </select>
+        </div>
+        {{#if snap}}
+        <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+         Ooups! There are no any drives for entered inputs at this moment. Please try later !
+        </div>
+        {{/if}}
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary" style="position:absolute; top:105%">Search</button>
+        </div>
+    </form> 
+</div>
