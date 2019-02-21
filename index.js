@@ -253,6 +253,16 @@ app.get('/about',(req,res,next)=>{
     res.render('about');
 });
 
+app.get('/logout',(req,res,next)=>{
+
+    if(auth != undefined && auth != null)
+    {
+        auth=null;
+    }
+    res.redirect('/');
+
+});
+
 
 
 app.post('/myprofile',(req,res,next)=>{
