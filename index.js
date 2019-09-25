@@ -6,7 +6,6 @@ const objectId=require('mongodb').ObjectID;
 const methodOverride=require('method-override');
 const path=require('path');
 const moment=require('moment');
-const router=express.Router();
 'use strict';
 const sessionstorage=require('sessionstorage');
 
@@ -30,6 +29,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
 app.use(methodOverride('_method'));
+
+
+let router = require("./src/router");
+router.forEach(route => {
+  app.use(route.path, route.handler);
+});
 
 
 /*var date=new Date(Date.now()).toLocaleDateString();
@@ -57,7 +62,9 @@ app.get('/myprofile',(req,res,next)=>{
     var resultArray=[];
     if(auth==null || auth ==undefined)
     {
-        res.render('login');
+        res.render('login',{
+            clicked:'myprofile'
+        });
     }
     else
     {
@@ -116,7 +123,9 @@ app.get('/mydrives',(req,res,next)=>{
     var resultArrayDrives=[];
     if(auth==null || auth ==undefined)
     {
-        res.render('login');
+        res.render('login',{
+            clicked:'mydrives'
+        });
     }
     else
     {
@@ -188,9 +197,20 @@ app.get('/mydrives',(req,res,next)=>{
 });
 
 app.get('/adddrive',(req,res,next)=>{
-    res.render('adddrive',{
-        dates:dates
-    });
+    if(auth==null || auth==undefined)
+    {
+        res.render('login',{
+            clicked:'adddrive'
+        });
+    }
+    else
+    {
+         res.render('adddrive',{
+         dates:dates
+        });
+
+    }
+   
 });
 
 app.get('/editdrive/:id',(req,res,next)=>{
@@ -384,7 +404,7 @@ app.post('/myprofile',(req,res,next)=>{
 
 
 }
-//request comes from welcome form
+//request comes from login form
 else
 {
     var resultArrayLogin=[];
@@ -434,13 +454,28 @@ else
                     {
                         auth=resultArrayLogin[0].auth;
                         client.close();
-                        res.render('myprofile',{
+                        if(req.body.clicked =='myprofile')
+                        {
+                            res.render('myprofile',{
                             username:resultArrayLogin[0].username,
                             name:resultArrayLogin[0].name,
                             lname:resultArrayLogin[0].lname,
                             email:resultArrayLogin[0].email
 
                         });
+
+                    }
+                    else if(req.body.clicked == 'mydrives')
+                    {
+                        res.redirect('/mydrives');
+
+                    }
+                    else
+                    {
+                        res.redirect('/adddrive');
+                    }
+                    
+                        
                     }
                 }
             });

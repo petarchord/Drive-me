@@ -1,4 +1,4 @@
-<div style="width: 390px; height: 490px; top: 50%; left: 50%; position: absolute; background: #000;
+<div style="width: 390px; height: 490px; top: 35%; left: 15%; position: absolute; background: #000;
 transform:translate(-50%,-50%); box-sizing:border-box;
 
 ">
@@ -10,6 +10,7 @@ transform:translate(-50%,-50%); box-sizing:border-box;
 <div style="top:160px; position:absolute; width:100%;">
 <input type="password" class="form-control" placeholder="Enter password" name="password">    
 </div>
+<input type="hidden" name="clicked" value="{{clicked}}">
 <p style="top:220px; left:25%; position:absolute;">You don't have an account?</p><a href="/register" style="top:250px; position:absolute; left:35%;" > Create one here. </a> 
 {{#if error}} 
 <div class="alert alert-dismissible alert-danger" style="position:absolute; top:70%;">
