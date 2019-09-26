@@ -14,5 +14,9 @@ module.exports = [
   {
     path: "/mydrives",
     handler: require("./routes/drives")
+  },
+  {
+    path: "/searchresult",
+    handler: require("./routes/searchresult")
   }
 ];

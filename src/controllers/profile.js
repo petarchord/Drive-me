@@ -1,10 +1,11 @@
 const mongo = require("mongodb").MongoClient;
+const auth = require("../../utility");
 
 module.exports = {
   profile: {
     get(req, res, next) {
       var resultArray = [];
-      if (auth == null || auth == undefined) {
+      if (!auth.getAuthStatus()) {
         res.render("login", {
           clicked: "myprofile"
         });
@@ -17,7 +18,7 @@ module.exports = {
               throw err;
             }
             var db = client.db("project3");
-            db.collection("user").find({ auth: auth }, (err, result) => {
+            db.collection("user").find({ auth: auth.token }, (err, result) => {
               if (err) {
                 throw err;
               }
@@ -105,9 +106,10 @@ module.exports = {
                       client.close();
                       return;
                     } else {
-                      auth = new Buffer(
+                      var token = new Buffer(
                         req.body.uname + ":" + req.body.passw
                       ).toString("base64");
+                      auth.setAuthToken(token);
                       db.collection("user").insert(
                         {
                           username: req.body.uname,
@@ -115,7 +117,7 @@ module.exports = {
                           name: req.body.name,
                           lname: req.body.lname,
                           email: req.body.email,
-                          auth: auth
+                          auth: auth.getAuthToken()
                         },
                         (err, result) => {
                           if (err) {
@@ -185,7 +187,7 @@ module.exports = {
                         });
                         return;
                       } else {
-                        auth = resultArrayLogin[0].auth;
+                        auth.setAuthToken(resultArrayLogin[0].auth);
                         client.close();
                         if (req.body.clicked == "myprofile") {
                           res.render("myprofile", {
@@ -208,6 +210,19 @@ module.exports = {
           }
         );
       }
+    }
+  },
+  about: {
+    get(req, res, next) {
+      res.render("about");
+    }
+  },
+  logout: {
+    get(req, res, next) {
+      if (auth.getAuthStatus()) {
+        auth.setAuthStatus(false);
+      }
+      res.redirect("/");
     }
   }
 };
