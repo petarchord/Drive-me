@@ -17,5 +17,15 @@ module.exports = {
         snap: false
       });
     }
+  },
+  about: {
+    get(req, res) {
+      res.render("about");
+    }
+  },
+  register: {
+    get(req, res, next) {
+      res.render("register");
+    }
   }
 };

@@ -8,10 +8,6 @@ module.exports = [
     handler: require("./routes/profile")
   },
   {
-    path: "/register",
-    handler: require("./routes/register")
-  },
-  {
     path: "/mydrives",
     handler: require("./routes/drives")
   },

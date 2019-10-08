@@ -8,7 +8,6 @@ const moment = require("moment");
 const auth = require("./utility");
 ("use strict");
 const sessionstorage = require("sessionstorage");
-
 var url = "mongodb://localhost:27017/project3";
 var dates = [];
 
@@ -22,6 +21,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(methodOverride("_method"));
+
+app.use((req, res, next) => {
+  // res.locals.success_msg = req.flash("success_msg");
+  // res.locals.error_msg = req.flash("error_msg");
+  // res.locals.error = req.flash("error");
+  res.locals.uri = req.path;
+  next();
+});
 
 let router = require("./src/router");
 router.forEach(route => {
@@ -344,39 +351,6 @@ app.post("/myprofile", (req, res, next) => {
         );
       }
     );
-
-    /*
-    client.hget('users',uname,(err,obj)=>{
-
-        if(obj)
-    {
-            res.render('register', {
-            error: 'The username is already in use, try another one!'
-        });
-        return;
-
-    }
-    
-    else
-    {
-        client.INCR('next_user_id', (err,objid) => {
-           var auth = new Buffer(uname + ':' + passw).toString('base64'); 
-           console.log(auth);
-           if(!client.hset('users',uname,objid))
-           console.log('Failure during the db write in users');
-           if(!client.hset('user:'+objid,'username',uname) || 
-           !client.hset('user:'+objid,'password',passw) || !client.hset('user:'+objid,'auth',auth))
-           console.log('Failure during the db write in user');
-           res.render('home',{
-               username:uname
-           });
-           return;
-           
-
-        });
-    }
-
-    }); */
   }
   //request comes from login form
   else {
@@ -445,43 +419,6 @@ app.post("/myprofile", (req, res, next) => {
         );
       }
     );
-
-    /*
-    client.hget('users',username,(err,obj1)=>{
-
-        
-        if(!obj1)
-        {
-            res.render('welcome', {
-                error: 'Wrong username or password!'
-            });
-        }
-        else
-        {
-            client.hget('user:'+obj1,'password',(err,obj2)=>{
-                if(obj2 != password)
-                {
-                    res.render('welcome', {
-                        error:'Wrong username or password!'
-                    });
-                }
-                else
-                {
-                        
-                     var cookies=new Cookies(req,res);
-                     client.hget('user:'+obj1,'auth',(err,objauth)=>{
-                         cookies.set('auth',objauth);
-                         
-                     });
-                     temp=username;
-                     res.render('home',{
-                     username:username
-            });
-                     console.log('The content of the cookie:'+cookies.get('auth'));
-                }
-            })
-        }
-    }) */
   }
 });
 
