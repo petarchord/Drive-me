@@ -18,33 +18,36 @@ module.exports = {
               throw err;
             }
             var db = client.db("project3");
-            db.collection("user").find({ auth: auth.token }, (err, result) => {
-              if (err) {
-                throw err;
-              }
-              console.log("My profile result :" + result[0]);
-              result.forEach(
-                (doc, err) => {
-                  if (err) {
-                    throw err;
-                  }
-                  resultArray.push(doc);
-                },
-                () => {
-                  if (resultArray.length == 0) {
-                    res.render("login");
-                  } else {
-                    res.render("myprofile", {
-                      name: resultArray[0].name,
-                      lname: resultArray[0].lname,
-                      email: resultArray[0].email,
-                      username: resultArray[0].username
-                    });
-                  }
-                  client.close();
+            db.collection("user").find(
+              { auth: auth.getAuthToken() },
+              (err, result) => {
+                if (err) {
+                  throw err;
                 }
-              );
-            });
+                console.log("My profile result :" + result[0]);
+                result.forEach(
+                  (doc, err) => {
+                    if (err) {
+                      throw err;
+                    }
+                    resultArray.push(doc);
+                  },
+                  () => {
+                    if (resultArray.length == 0) {
+                      res.render("login");
+                    } else {
+                      res.render("myprofile", {
+                        name: resultArray[0].name,
+                        lname: resultArray[0].lname,
+                        email: resultArray[0].email,
+                        username: resultArray[0].username
+                      });
+                    }
+                    client.close();
+                  }
+                );
+              }
+            );
           }
         );
       }
@@ -110,6 +113,7 @@ module.exports = {
                         req.body.uname + ":" + req.body.passw
                       ).toString("base64");
                       auth.setAuthToken(token);
+                      auth.setAuthStatus(true);
                       db.collection("user").insert(
                         {
                           username: req.body.uname,
@@ -188,6 +192,7 @@ module.exports = {
                         return;
                       } else {
                         auth.setAuthToken(resultArrayLogin[0].auth);
+                        auth.setAuthStatus(true);
                         client.close();
                         if (req.body.clicked == "myprofile") {
                           res.render("myprofile", {
@@ -210,19 +215,6 @@ module.exports = {
           }
         );
       }
-    }
-  },
-  about: {
-    get(req, res, next) {
-      res.render("about");
-    }
-  },
-  logout: {
-    get(req, res, next) {
-      if (auth.getAuthStatus()) {
-        auth.setAuthStatus(false);
-      }
-      res.redirect("/");
     }
   }
 };

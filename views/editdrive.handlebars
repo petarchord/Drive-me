@@ -14,27 +14,27 @@
         </div>
         <div class="form-group">
             <label for="exampleSelect1">Date:</label>
-        <select class="form-control" name="date">
-            {{#each dates}}
-            <option>{{this}}</option>
-            {{/each}}
-           
-        </select>
+            <select class="form-control" name="date">
+                {{#each dates}}
+                <option>{{this}}</option>
+                {{/each}}
+
+            </select>
         </div>
         <div class="form-group">
             <label> Time: </label>
             <input type="text" name="time" class="form-control" value={{result.time}}>
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label> Passengers: </label>
             <select class="form-control" name="persons">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>     
-        </select>     
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select>
         </div>
         <div class="form-group">
             <label> Price: </label>
@@ -49,17 +49,17 @@
             <input type="text" name="phone" class="form-control" value="{{result.phone}}">
         </div>
         <div class="form-group">
-        <label for="exampleTextarea">Description:</label>
-        <textarea aria-valuenow="{{result.descr}}" class="form-control" name="descr" rows="3" ></textarea>
+            <label for="exampleTextarea">Description:</label>
+            <textarea aria-valuenow="{{result.descr}}" class="form-control" name="descr" rows="3"></textarea>
         </div>
         {{#if snap}}
         <div class="alert alert-dismissible alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-         Ooups! There are no any drives for entered inputs at this moment. Please try later !
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            Ooups! There are no any drives for entered inputs at this moment. Please try later !
         </div>
         {{/if}}
         <div class="form-group">
-        <button type="submit" class="btn btn-primary" style="position:absolute; top:105%">Edit drive</button>
+            <button type="submit" class="btn btn-primary" style="position:absolute; top:105%">Edit drive</button>
         </div>
-    </form> 
+    </form>
 </div>

@@ -1,4 +1,5 @@
 const mongo = require("mongodb").MongoClient;
+const utility = require("../../utility");
 
 module.exports = {
   search: {
@@ -78,7 +79,10 @@ module.exports = {
                 () => {
                   console.log("resultArray:" + resultArray.length);
                   if (resultArray.length == 0) {
-                    res.render("searchdrive", { snap: true, dates: dates });
+                    res.render("searchdrive", {
+                      snap: true,
+                      dates: utility.getDates()
+                    });
                   } else {
                     res.render("searchresult", {
                       result: resultArray,
